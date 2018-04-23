@@ -74,16 +74,8 @@ namespace ConsoleApp2.DataModels
                 case 0x52:
                     Logger.Log("Main params");
                     bytes = bytes.Skip(2).ToArray();
-                    Logger.Log("Pre first conv");
-                    try
-                    {
-                        currentData.Angles[0] = BitConverter.ToSingle(bytes, 0);
-                    }
-                    catch(Exception e)
-                    {
-                        Logger.Log(e.Message);
-                    }
-                    Logger.Log("After first conv");
+
+                    currentData.Angles[0] = BitConverter.ToSingle(bytes, 0);
                     bytes = bytes.Skip(4).ToArray();
 
                     for (int i = 0; i < 3; i++)
