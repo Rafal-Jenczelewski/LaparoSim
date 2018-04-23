@@ -26,7 +26,7 @@ namespace LaparoCommunicator
 
         public CartesianData GetDataInCartesian()
         {
-            if (cartesianData.Length == position - 1)
+            if (cartesianData.Length == position)
                 position = 0;
 
             var splittedData = cartesianData[position].Split(SideSeparator, StringSplitOptions.RemoveEmptyEntries);
@@ -39,7 +39,7 @@ namespace LaparoCommunicator
 
         public EulerData GetDataInEuler()
         {
-            if (eulerData.Length == position - 1)
+            if (eulerData.Length == position)
                 position = 0;
 
             var splittedData = eulerData[position].Split(SideSeparator, StringSplitOptions.RemoveEmptyEntries);
@@ -52,7 +52,7 @@ namespace LaparoCommunicator
 
         public QuaternionData GetDataInQuaternion()
         {
-            if (quaternionData.Length == position - 1)
+            if (quaternionData.Length == position)
                 position = 0;
 
             var splittedData = quaternionData[position].Split(SideSeparator, StringSplitOptions.RemoveEmptyEntries);
@@ -60,6 +60,7 @@ namespace LaparoCommunicator
 
             var leftCoords = splittedData[0].Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
             var rightCoords = splittedData[1].Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+
             return new QuaternionData() { LeftQuaternion = leftCoords, RightQuaternion = rightCoords };
         }
 

@@ -6,6 +6,7 @@ using System.Management;
 using System.Text;
 using System.Threading;
 using ConsoleApp2.DataModels;
+using ConsoleApp2.Utils;
 
 namespace LaparoCommunicator
 {
@@ -14,11 +15,12 @@ namespace LaparoCommunicator
         private SerialPort port;
         private Thread pingerThread;
         private Thread receiverThread;
-        private string targetId = "";
+        private string targetId = "PID_5740";
         private readonly InternalData internalData = new InternalData();
 
         internal LaparoCommunicatorImpl()
         {
+            Logger.Log("------");
             SetPort();
 
             Thread.Sleep(50);
@@ -32,6 +34,7 @@ namespace LaparoCommunicator
         {
             pingerThread.Abort();
             receiverThread.Abort();
+            port.Close();
         }
 
         public CartesianData GetDataInCartesian()
@@ -59,6 +62,9 @@ namespace LaparoCommunicator
 
         private void SetPort()
         {
+            if (targetId == "")
+                throw new Exception("No id to search for set!");
+
             string[] portNames = SerialPort.GetPortNames();
             string sInstanceName = string.Empty;
             string sPortName = string.Empty;
@@ -85,8 +91,9 @@ namespace LaparoCommunicator
                     break;
             }
 
-            if(!bFound)
+            if (!bFound)
                 throw new IOException("No Laparo device found, aborting");
+            Logger.Log("After open");
         }
 
         private void SendCommand(OutCommand command)
@@ -110,8 +117,10 @@ namespace LaparoCommunicator
 
         private void PingDevice()
         {
+            Logger.Log("Starting pinging");
             while (true)
             {
+                Logger.Log("Ping");
                 SendCommand(new OutCommand(OutCommandId.PING));
                 Thread.Sleep(1000);
             }
@@ -119,17 +128,25 @@ namespace LaparoCommunicator
 
         private void ReceiveData()
         {
+            Logger.Log("Starting receiver");
+            int i = 0;
             while (true)
             {
+                Logger.Log("iteracja rec: " + i);
                 byte[] bytes;
                 lock (port)
                 {
+                    if (!port.IsOpen)
+                        Logger.Log("Port not opened");
                     string s = port.ReadExisting();
+                    Logger.Log("Received bytes: " + s.Length);
                     bytes = Encoding.ASCII.GetBytes(s);
                 }
+                if (bytes.Length != 0)
+                    internalData.ProccesBytes(bytes);
 
-                internalData.ProccesBytes(bytes);
                 Thread.Sleep(10);
+                i++;
             }
         }
 
