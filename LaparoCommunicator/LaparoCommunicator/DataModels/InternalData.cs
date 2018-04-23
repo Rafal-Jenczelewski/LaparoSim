@@ -20,6 +20,12 @@ namespace ConsoleApp2.DataModels
 
         private class Data
         {
+            public Data()
+            {
+                Quad = new double[4];
+                Angles = new double[3];
+            }
+
            public double[] Quad { get; set; }
             public double[] Angles { get; set; }
             public double Acc { get; set; }
@@ -41,24 +47,24 @@ namespace ConsoleApp2.DataModels
             Logger.Log("Header correct");
 
             bytes = bytes.Skip(2).ToArray();
-            Data currentData;
+            Data currentData = new Data();
 
             //Założenie, że niezależnie od wszystkiego 4 bajt oznacza stronę...
-            if (bytes[2] == 'L')
-            {
-                currentData = leftData;
+            //if (bytes[2] == 'L')
+            //{
+                //currentData = leftData;
                 Logger.Log("Got left side");
-            }
-            else if (bytes[2] == 'R')
-            {
-                currentData = rightData;
-                Logger.Log("Got right side");
-            }
-            else
-            {
-                Logger.Log("Got unknown side");
-                throw new Exception("Unknown side at byte 4");             
-            }
+            //}
+            //else if (bytes[2] == 'R')
+            //{
+            //   currentData = rightData;
+            //    Logger.Log("Got right side");
+            //}
+            //else
+            //{
+            //    Logger.Log("Got unknown side: " + bytes[2]);
+            //    throw new Exception("Unknown side at byte 4");             
+            //}
 
             switch (bytes[1])
             {
@@ -68,7 +74,16 @@ namespace ConsoleApp2.DataModels
                 case 0x52:
                     Logger.Log("Main params");
                     bytes = bytes.Skip(2).ToArray();
-                    currentData.Angles[0] = BitConverter.ToSingle(bytes, 0);
+                    Logger.Log("Pre first conv");
+                    try
+                    {
+                        currentData.Angles[0] = BitConverter.ToSingle(bytes, 0);
+                    }
+                    catch(Exception e)
+                    {
+                        Logger.Log(e.Message);
+                    }
+                    Logger.Log("After first conv");
                     bytes = bytes.Skip(4).ToArray();
 
                     for (int i = 0; i < 3; i++)
@@ -87,36 +102,43 @@ namespace ConsoleApp2.DataModels
                     bytes = bytes.Skip(2).ToArray();
                     break;
                 case 0x41:
+                    Logger.Log("Got acc");
                     bytes = bytes.Skip(2).ToArray();
                     currentData.Acc = BitConverter.ToSingle(bytes, 0);
                     bytes = bytes.Skip(4).ToArray();
                     break;
                 case 0x56:
+                    Logger.Log("Got vel");
                     bytes = bytes.Skip(2).ToArray();
                     currentData.Vel = BitConverter.ToSingle(bytes, 0);
                     bytes = bytes.Skip(4).ToArray();
                     break;
                 case 0x4F:
+                    Logger.Log("Got osc");
                     bytes = bytes.Skip(2).ToArray();
                     currentData.Osc = BitConverter.ToSingle(bytes, 0);
                     bytes = bytes.Skip(4).ToArray();
                     break;
                 case 0x44:
+                    Logger.Log("Got dist");
                     bytes = bytes.Skip(2).ToArray();
                     currentData.Dist = BitConverter.ToSingle(bytes, 0);
                     bytes = bytes.Skip(4).ToArray();
                     break;
                 case 0x53:
+                    Logger.Log("Clamps");
                     bytes = bytes.Skip(2).ToArray();
                     currentData.ClampsS = BitConverter.ToSingle(bytes, 0);
                     bytes = bytes.Skip(4).ToArray();
                     break;
                 case 0x43:
+                    Logger.Log("Clamps");
                     bytes = bytes.Skip(2).ToArray();
                     currentData.Clamps = BitConverter.ToSingle(bytes, 0);
                     bytes = bytes.Skip(4).ToArray();
                     break;
             }
+            Logger.Log("After switch");
         }
 
         public double[] GetQuad(Side s)
