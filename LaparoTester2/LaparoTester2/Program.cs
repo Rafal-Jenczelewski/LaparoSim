@@ -13,8 +13,8 @@ namespace LaparoTester2
         {
             using (var comm = CommunicatorFactory.GetCommunicator())
             {
-                for (long i = Int64.MinValue; i < Int64.MaxValue; i++)
-                        ;// Console.WriteLine("iter" + i + j);
+                for (long i = -1000000; i < 2000; i++)
+                    Console.WriteLine(comm.GetDataInQuaternion());
             }
             Console.ReadKey();
         }
