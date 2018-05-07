@@ -12,6 +12,20 @@ namespace ConsoleApp2.DataModels
         Left = 1,
         Right = 2
     }
+
+    enum InCommand : byte
+    {
+        Empty = 0x00,
+        ResultsVirtual = 0x52,
+        Acc = 0x41,
+        Vel = 0x56,
+        Dist = 0x44,
+        ClampsS = 0x53,
+        Clamps = 0x43,
+        Info = 0x49,
+        M = 0x4D,
+        Osc = 0x4F
+    }
     
     class InternalData
     {
@@ -79,15 +93,17 @@ namespace ConsoleApp2.DataModels
                     currentData = new Data();
                 }
 
+                InCommand id = (InCommand)bytes[0];
+                bytes = bytes.Skip(2).ToArray();
+
                 //TODO: Should be an enum
-                switch (bytes[0])
+                switch (id)
                 {
-                    case 0x00:
+                    case InCommand.Empty:
                         Logger.Log("No command");
                         break;
-                    case 0x52:
+                    case InCommand.ResultsVirtual:
                         Logger.Log("Main params");
-                        bytes = bytes.Skip(2).ToArray();
 
                         currentData.Angles[0] = BitConverter.ToSingle(bytes, 0);
                         bytes = bytes.Skip(4).ToArray();
@@ -104,49 +120,42 @@ namespace ConsoleApp2.DataModels
                         currentData.Angles[2] = BitConverter.ToSingle(bytes, 0);
                         bytes = bytes.Skip(4).ToArray();
                         break;
-                    case 0x4D:
+                    case InCommand.M:
                         Logger.Log("Got 0x4D");
-                        bytes = bytes.Skip(2).ToArray();
                         break;
-                    case 0x41:
+                    case InCommand.Acc:
                         Logger.Log("Got acc");
-                        bytes = bytes.Skip(2).ToArray();
                         currentData.Acc = BitConverter.ToSingle(bytes, 0);
                         bytes = bytes.Skip(4).ToArray();
                         break;
-                    case 0x56:
+                    case InCommand.Vel:
                         Logger.Log("Got vel");
-                        bytes = bytes.Skip(2).ToArray();
                         currentData.Vel = BitConverter.ToSingle(bytes, 0);
                         bytes = bytes.Skip(4).ToArray();
                         break;
-                    case 0x4F:
+                    case InCommand.Osc:
                         Logger.Log("Got osc");
-                        bytes = bytes.Skip(2).ToArray();
                         currentData.Osc = BitConverter.ToSingle(bytes, 0);
                         bytes = bytes.Skip(4).ToArray();
                         break;
-                    case 0x44:
+                    case InCommand.Dist:
                         Logger.Log("Got dist");
-                        bytes = bytes.Skip(2).ToArray();
                         currentData.Dist = BitConverter.ToSingle(bytes, 0);
                         bytes = bytes.Skip(4).ToArray();
                         break;
-                    case 0x53:
+                    case InCommand.ClampsS:
                         Logger.Log("Clamps_S");
-                        bytes = bytes.Skip(2).ToArray();
                         currentData.ClampsS = BitConverter.ToSingle(bytes, 0);
                         bytes = bytes.Skip(4).ToArray();
                         break;
-                    case 0x43:
+                    case InCommand.Clamps:
                         Logger.Log("Clamps");
-                        bytes = bytes.Skip(2).ToArray();
                         currentData.Clamps = BitConverter.ToSingle(bytes, 0);
                         bytes = bytes.Skip(4).ToArray();
                         break;
                     //IN_INFO, convert to hex
-                    case 73:
-                        bytes = bytes.Skip(37).ToArray();
+                    case InCommand.Info:
+                        bytes = bytes.Skip(35).ToArray();
                         break;
                     default:
                         Logger.Log("Got unkown command: " + bytes[0]);
