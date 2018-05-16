@@ -14,14 +14,14 @@ namespace LaparoCommunicator
         private readonly string[] eulerData;
         private readonly string[] quaternionData;
         private int position = 0;
-        private static readonly char[] SideSeparator = {'|'};
-        private static readonly char[] CoordSeparator = {' '};
+        private static readonly char[] CoordSeparator = {'\t'};
+        private static readonly string fileExtension = ".tsv";
 
         internal LaparoCommunicatorMock(string path)
         {
-            cartesianData = File.ReadAllLines(path + "cartesian.txt");
-            eulerData = File.ReadAllLines(path + "euler.txt");
-            quaternionData = File.ReadAllLines(path + "quaternion.txt");
+            cartesianData = File.ReadAllLines(path + "cartesian" + fileExtension);
+            eulerData = File.ReadAllLines(path + "euler" + fileExtension);
+            quaternionData = File.ReadAllLines(path + "quaternion" + fileExtension);
         }
 
         public CartesianData GetDataInCartesian()
@@ -29,11 +29,13 @@ namespace LaparoCommunicator
             if (cartesianData.Length == position)
                 position = 0;
 
-            var splittedData = cartesianData[position].Split(SideSeparator, StringSplitOptions.RemoveEmptyEntries);
-            position++;
+            var data = cartesianData[position];
+            var leftCoords = data.Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
 
-            var leftCoords = splittedData[0].Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
-            var rightCoords = splittedData[1].Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+            data = cartesianData[position + 1];
+            var rightCoords =data.Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+            position = position + 2;
+
             return new CartesianData {LeftCoordinats = leftCoords, RightCoordinats = rightCoords};
         }
 
@@ -42,11 +44,13 @@ namespace LaparoCommunicator
             if (eulerData.Length == position)
                 position = 0;
 
-            var splittedData = eulerData[position].Split(SideSeparator, StringSplitOptions.RemoveEmptyEntries);
-            position++;
+            var data = eulerData[position];
+            var leftCoords = data.Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
 
-            var leftCoords = splittedData[0].Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
-            var rightCoords = splittedData[1].Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+            data = eulerData[position + 1];
+            var rightCoords = data.Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+            position = position + 2;
+
             return new EulerData() { LeftAngles = leftCoords, RightAngles = rightCoords };
         }
 
@@ -55,11 +59,12 @@ namespace LaparoCommunicator
             if (quaternionData.Length == position)
                 position = 0;
 
-            var splittedData = quaternionData[position].Split(SideSeparator, StringSplitOptions.RemoveEmptyEntries);
-            position++;
+            var data = quaternionData[position];
+            var leftCoords = data.Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
 
-            var leftCoords = splittedData[0].Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
-            var rightCoords = splittedData[1].Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+            data = quaternionData[position + 1];
+            var rightCoords = data.Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
+            position = position + 2;
 
             return new QuaternionData() { LeftQuaternion = leftCoords, RightQuaternion = rightCoords };
         }

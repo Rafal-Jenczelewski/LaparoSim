@@ -23,14 +23,14 @@ namespace ConsoleApp2.DataModels
         ClampsS = 0x53,
         Clamps = 0x43,
         Info = 0x49,
-        M = 0x4D,
+        InResultsCam = 0x4D,
         Osc = 0x4F
     }
     
     class InternalData
     {
-        private readonly Data leftData = new Data();
-        private readonly Data rightData = new Data();
+        private Data leftData = new Data();
+        private Data rightData = new Data();
 
         private class Data
         {
@@ -76,27 +76,12 @@ namespace ConsoleApp2.DataModels
                 bytes = bytes.Skip(2).ToArray();
                 Data currentData = new Data();
 
-                //Założenie, że niezależnie od wszystkiego 4 bajt oznacza stronę...
-                if (bytes[1] == 'L')
-                {
-                    currentData = leftData;
-                    Logger.Log("Got left side");
-                }
-                else if (bytes[1] == 'R')
-                {
-                    currentData = rightData;
-                    Logger.Log("Got right side");
-                }
-                else
-                {
-                    Logger.Log("Got unknown side: " + bytes[1]);
-                    currentData = new Data();
-                }
+                byte side = bytes[1];
 
                 InCommand id = (InCommand)bytes[0];
                 bytes = bytes.Skip(2).ToArray();
 
-                //TODO: Should be an enum
+
                 switch (id)
                 {
                     case InCommand.Empty:
@@ -120,7 +105,7 @@ namespace ConsoleApp2.DataModels
                         currentData.Angles[2] = BitConverter.ToSingle(bytes, 0);
                         bytes = bytes.Skip(4).ToArray();
                         break;
-                    case InCommand.M:
+                    case InCommand.InResultsCam:
                         Logger.Log("Got 0x4D");
                         break;
                     case InCommand.Acc:
@@ -161,6 +146,17 @@ namespace ConsoleApp2.DataModels
                         Logger.Log("Got unkown command: " + bytes[0]);
                         break;
                 }
+
+                switch(side)
+                {
+                    case (byte)'L':
+                        leftData = currentData;
+                        break;
+                    case (byte)'R':
+                        rightData = currentData;
+                        break;
+                }
+
                 //We need to skip CRC
                 bytes = bytes.Skip(1).ToArray();
                 Logger.Log("After switch"); 
