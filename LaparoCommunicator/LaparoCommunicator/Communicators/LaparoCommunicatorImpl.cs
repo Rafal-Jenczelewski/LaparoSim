@@ -37,11 +37,6 @@ namespace LaparoCommunicator
             port.Close();
         }
 
-        public CartesianData GetDataInCartesian()
-        {
-            throw new NotSupportedException("Method not yet implemented");
-        }
-
         public EulerData GetDataInEuler()
         {
             return new EulerData()

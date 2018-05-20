@@ -45,7 +45,6 @@
     <Compile Include="Communicators\ILaparoCommunicator.cs" />
     <Compile Include="Communicators\LaparoCommunicatorImpl.cs" />
     <Compile Include="Communicators\LaparoCommunicatorMock.cs" />
-    <Compile Include="DataModels\CartesianData.cs" />
     <Compile Include="DataModels\EulerData.cs" />
     <Compile Include="DataModels\InternalData.cs" />
     <Compile Include="DataModels\QuaternionData.cs" />
