@@ -19,24 +19,8 @@ namespace LaparoCommunicator
 
         internal LaparoCommunicatorMock(string path)
         {
-            cartesianData = File.ReadAllLines(path + "cartesian" + fileExtension);
             eulerData = File.ReadAllLines(path + "euler" + fileExtension);
             quaternionData = File.ReadAllLines(path + "quaternion" + fileExtension);
-        }
-
-        public CartesianData GetDataInCartesian()
-        {
-            if (cartesianData.Length == position)
-                position = 0;
-
-            var data = cartesianData[position];
-            var leftCoords = data.Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
-
-            data = cartesianData[position + 1];
-            var rightCoords =data.Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(double.Parse).ToArray();
-            position = position + 2;
-
-            return new CartesianData {LeftCoordinats = leftCoords, RightCoordinats = rightCoords};
         }
 
         public EulerData GetDataInEuler()
