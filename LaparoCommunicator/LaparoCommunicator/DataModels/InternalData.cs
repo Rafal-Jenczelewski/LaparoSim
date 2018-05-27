@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ConsoleApp2.Utils;
 
-namespace ConsoleApp2.DataModels
+namespace LaparoCommunicator
 {
     enum Side
     {
@@ -56,7 +54,7 @@ namespace ConsoleApp2.DataModels
         {
             Logger.Log("Proccessing");
 
-            while (!String.IsNullOrEmpty(Encoding.ASCII.GetString(bytes)))
+            while (!Encoding.ASCII.GetString(bytes).IsNullOrWhitespace())
             {
                 Logger.Log(System.Text.Encoding.ASCII.GetString(bytes.Take(4).ToArray()));
 

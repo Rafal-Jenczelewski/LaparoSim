@@ -1,11 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.IO.Ports;
-using System.Management;
 using System.Text;
 using System.Threading;
-using ConsoleApp2.DataModels;
-using ConsoleApp2.Utils;
 
 namespace LaparoCommunicator
 {
@@ -16,6 +13,8 @@ namespace LaparoCommunicator
         private Thread receiverThread;
         private string targetId = "PID_5740";
         private readonly InternalData internalData = new InternalData();
+
+        private static string portFilePath = Path.Combine(Directory.GetCurrentDirectory(), "\\portName.txt");
 
         internal LaparoCommunicatorImpl()
         {
@@ -60,33 +59,13 @@ namespace LaparoCommunicator
                 throw new Exception("No id to search for set!");
 
             string[] portNames = SerialPort.GetPortNames();
-            string sInstanceName = string.Empty;
-            string sPortName = string.Empty;
-            bool bFound = false;
+            string portName = string.Empty;
 
-            for (int i = 0; i < portNames.Length; i++)
-            {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\WMI", "SELECT * FROM MSSerial_PortName");
-                foreach (ManagementObject queryObj in searcher.Get())
-                {
-                    sInstanceName = queryObj["InstanceName"].ToString();
-                    if (sInstanceName.IndexOf(targetId) > -1)
-                    {
-                        Console.WriteLine("Laparo device found!");
-                        sPortName = queryObj["PortName"].ToString();
-                        port = new SerialPort(sPortName, 9600, Parity.None, 8, StopBits.One);
-                        port.Open();
-                        bFound = true;
-                        break;
-                    }
-                }
+            portName = File.ReadAllLines(portFilePath)[0];
 
-                if (bFound)
-                    break;
-            }
+            port = new SerialPort(portName, 9600, Parity.None, 8, StopBits.One);
 
-            if (!bFound)
-                throw new IOException("No Laparo device found, aborting");
+            
             Logger.Log("After open");
         }
 

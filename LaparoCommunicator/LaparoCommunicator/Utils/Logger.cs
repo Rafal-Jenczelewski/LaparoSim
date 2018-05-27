@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace ConsoleApp2.Utils
+namespace LaparoCommunicator    
 {
     class Logger
     {
@@ -16,7 +16,7 @@ namespace ConsoleApp2.Utils
         {
             using (var writer = new StreamWriter(path, true))
             {
-                //writer.W(s);
+                writer.Write(s);
             }
         }
     }
