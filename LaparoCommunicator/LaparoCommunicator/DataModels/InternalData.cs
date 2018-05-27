@@ -35,18 +35,18 @@ namespace ConsoleApp2.DataModels
         {
             public Data()
             {
-                Quad = new double[4];
-                Angles = new double[3];
+                Quad = new float[4];
+                Angles = new float[3];
             }
 
-           public double[] Quad { get; set; }
-            public double[] Angles { get; set; }
-            public double Acc { get; set; }
-            public double Vel { get; set; }
-            public double Dist { get; set; }
-            public double Osc { get; set; }
-            public double Clamps { get; set; }
-            public double ClampsS { get; set; }
+           public float[] Quad { get; set; }
+            public float[] Angles { get; set; }
+            public float Acc { get; set; }
+            public float Vel { get; set; }
+            public float Dist { get; set; }
+            public float Osc { get; set; }
+            public float Clamps { get; set; }
+            public float ClampsS { get; set; }
         }
 
         internal InternalData()
@@ -162,7 +162,7 @@ namespace ConsoleApp2.DataModels
             }
         }
 
-        public double[] GetQuad(Side s)
+        public float[] GetQuad(Side s)
         {
             switch (s)
             {
@@ -172,10 +172,10 @@ namespace ConsoleApp2.DataModels
                     return rightData.Quad;
             }
 
-            return new double[0];
+            return new float[4];
         }
 
-        public double[] GetAngles(Side s)
+        public float[] GetAngles(Side s)
         {
             switch (s)
             {
@@ -185,7 +185,7 @@ namespace ConsoleApp2.DataModels
                     return rightData.Angles;
             }
 
-            return new double[0];
+            return new float[4];
         }
     }
 }
