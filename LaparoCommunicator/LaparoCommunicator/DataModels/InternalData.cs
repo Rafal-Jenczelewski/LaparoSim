@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using ConsoleApp2.Utils;
 
 namespace ConsoleApp2.DataModels
@@ -57,7 +56,7 @@ namespace ConsoleApp2.DataModels
         {
             Logger.Log("Proccessing");
 
-            while (!String.IsNullOrWhiteSpace(System.Text.Encoding.ASCII.GetString(bytes)))
+            while (!String.IsNullOrEmpty(Encoding.ASCII.GetString(bytes)))
             {
                 Logger.Log(System.Text.Encoding.ASCII.GetString(bytes.Take(4).ToArray()));
 

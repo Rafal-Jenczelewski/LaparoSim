@@ -4,13 +4,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LaparoCommunicator
 {
     class LaparoCommunicatorMock : ILaparoCommunicator
     {
-        private readonly string[] cartesianData;
         private readonly string[] eulerData;
         private readonly string[] quaternionData;
         private int position = 0;
