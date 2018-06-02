@@ -14,7 +14,7 @@ namespace LaparoCommunicator
         private string targetId = "PID_5740";
         private readonly InternalData internalData = new InternalData();
 
-        private static string portFilePath = Path.Combine(Directory.GetCurrentDirectory(), "\\portName.txt");
+        private static string portFilePath = Path.Combine(Directory.GetCurrentDirectory(), "/portName.txt");
 
         internal LaparoCommunicatorImpl()
         {
@@ -64,7 +64,7 @@ namespace LaparoCommunicator
             portName = File.ReadAllLines(portFilePath)[0];
 
             port = new SerialPort(portName, 9600, Parity.None, 8, StopBits.One);
-
+            port.Open();
             
             Logger.Log("After open");
         }

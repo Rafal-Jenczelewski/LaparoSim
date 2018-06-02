@@ -137,6 +137,7 @@ namespace LaparoCommunicator
                         break;
                     //IN_INFO, convert to hex
                     case InCommand.Info:
+                        Logger.Log("Got info");
                         bytes = bytes.Skip(35).ToArray();
                         break;
                     default:
@@ -144,6 +145,7 @@ namespace LaparoCommunicator
                         break;
                 }
 
+                if (id == InCommand.ResultsVirtual)
                 switch(side)
                 {
                     case (byte)'L':

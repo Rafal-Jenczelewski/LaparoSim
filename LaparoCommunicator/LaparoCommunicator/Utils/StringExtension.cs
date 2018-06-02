@@ -2,7 +2,7 @@
 using System.Linq;
 
 namespace LaparoCommunicator
-    
+{     
     static class StringExtension
     {
         public static bool IsNullOrWhitespace(this string s)
@@ -11,7 +11,7 @@ namespace LaparoCommunicator
                 return true;
 
             char[] chars = s.ToCharArray();
-            char[] whitespaces = chars.Where(c => Char.IsWhiteSpace(c)).ToArray();
+            char[] whitespaces = chars.Where(Char.IsWhiteSpace).ToArray();
 
             return chars.Length == whitespaces.Length;
         }

@@ -14,10 +14,10 @@ namespace LaparoTester2
         {
             using (var comm = CommunicatorFactory.GetCommunicator())
             {
-                for (long i = 0; i < 100; i++)
+                for (long i = 0; i < 1000000; i++)
                 {
                     Console.WriteLine(comm.GetDataInQuaternion());
-                    Thread.Sleep(1000);
+                    //Thread.Sleep(1000);
                 }
             }
             Console.WriteLine("End.");

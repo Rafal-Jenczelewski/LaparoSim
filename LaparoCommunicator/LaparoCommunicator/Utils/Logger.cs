@@ -16,7 +16,7 @@ namespace LaparoCommunicator
         {
             using (var writer = new StreamWriter(path, true))
             {
-                writer.Write(s);
+                writer.WriteLineAsync(s);
             }
         }
     }
