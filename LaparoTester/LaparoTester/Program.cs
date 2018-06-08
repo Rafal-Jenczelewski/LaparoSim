@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace LaparoTester
     {
         static void Main(string[] args)
         {
-            using (var comm = LaparoCommunicator.CommunicatorFactory.GetMock(@"C:/data/"))
+            using (var comm = LaparoCommunicator.CommunicatorFactory.GetMock(Path.Combine(Directory.GetCurrentDirectory(), "/data")))
             {
                 for (int i = 0; i < 10; i++)
                 {
