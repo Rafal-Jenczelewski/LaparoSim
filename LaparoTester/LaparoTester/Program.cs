@@ -12,15 +12,23 @@ namespace LaparoTester
     {
         static void Main(string[] args)
         {
-            using (var comm = LaparoCommunicator.CommunicatorFactory.GetMock(Path.Combine(Directory.GetCurrentDirectory(), "/data")))
+            try
             {
-                for (int i = 0; i < 10; i++)
+                using (var comm = LaparoCommunicator.CommunicatorFactory.GetMock(Path.Combine(Directory.GetCurrentDirectory(), "/data")))
                 {
-                    Console.WriteLine(comm.GetDataInQuaternion());
-                    Console.WriteLine(comm.GetDataInEuler());
-                }       
-                Console.ReadKey();
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Console.WriteLine(comm.GetDataInQuaternion());
+                        Console.WriteLine(comm.GetDataInEuler());
+                    }
+                    Console.WriteLine("End.");
+                }
             }
+            catch (IOException e)
+            {
+                Console.WriteLine("Brak pliku z danymi, program kończy działanie.");
+            }
+            Console.ReadKey();
         }
     }
 }
