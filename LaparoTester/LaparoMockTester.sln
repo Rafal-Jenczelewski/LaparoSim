@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaparoTester", "LaparoTester\LaparoTester.csproj", "{3463C885-6D22-4FDB-95A9-A8B49AD79464}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaparoMockTester", "LaparoTester\LaparoMockTester.csproj", "{3463C885-6D22-4FDB-95A9-A8B49AD79464}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

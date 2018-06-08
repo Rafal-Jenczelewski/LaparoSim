@@ -13,8 +13,11 @@ namespace LaparoTester
         {
             using (var comm = LaparoCommunicator.CommunicatorFactory.GetMock(@"C:/data/"))
             {
-                Console.WriteLine(comm.GetDataInQuaternion());
-                Console.WriteLine(comm.GetDataInEuler());        
+                for (int i = 0; i < 10; i++)
+                {
+                    Console.WriteLine(comm.GetDataInQuaternion());
+                    Console.WriteLine(comm.GetDataInEuler());
+                }       
                 Console.ReadKey();
             }
         }
