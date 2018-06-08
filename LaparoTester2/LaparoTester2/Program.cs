@@ -12,13 +12,21 @@ namespace LaparoTester2
     {
         static void Main()
         {
-            using (var comm = CommunicatorFactory.GetCommunicator())
+            try
             {
-                for (long i = 0; i < 1000000; i++)
+                using (var comm = CommunicatorFactory.GetCommunicator())
                 {
-                    Console.WriteLine(comm.GetDataInQuaternion());
-                    //Thread.Sleep(1000);
+                    while (true)
+                    {
+                        Console.WriteLine(comm.GetDataInQuaternion());
+                        if (Console.ReadKey().Key == ConsoleKey.Q)
+                            break;
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Podano zły port, lub port nie mógł zostać otwarty.");
             }
             Console.WriteLine("End.");
             Console.ReadKey();
