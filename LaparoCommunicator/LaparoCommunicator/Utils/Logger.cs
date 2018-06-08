@@ -9,7 +9,7 @@ namespace LaparoCommunicator
 {
     class Logger
     {
-        private static string path = "D:/laparo_logs.txt";
+        private static string path = Path.Combine(Directory.GetCurrentDirectory(), "/laparo_logs.txt");
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void Log(string s)
