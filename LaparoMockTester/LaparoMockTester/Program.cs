@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LaparoCommunicator;
 
-namespace LaparoTester
+namespace LaparoMockTester
 {
     class Program
     {
@@ -20,6 +20,7 @@ namespace LaparoTester
                     {
                         Console.WriteLine(comm.GetDataInQuaternion());
                         Console.WriteLine(comm.GetDataInEuler());
+                        Console.WriteLine();
                     }
                     Console.WriteLine("End.");
                 }

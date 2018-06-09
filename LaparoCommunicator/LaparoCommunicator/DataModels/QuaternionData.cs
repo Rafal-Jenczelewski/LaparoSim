@@ -21,7 +21,6 @@ namespace LaparoCommunicator
             }
 
             return s;
-            //return $"Left: {LeftQuaternion.Select(e => e.ToString(CultureInfo.InvariantCulture))}, Right: {RightQuaternion}\n";
         }
     }
 }

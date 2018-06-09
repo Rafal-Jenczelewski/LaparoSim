@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using LaparoCommunicator;
+using LaparoCommunicator;   
 
-namespace LaparoTester2
+namespace LaparoImplTester
 {
     class Program
     {

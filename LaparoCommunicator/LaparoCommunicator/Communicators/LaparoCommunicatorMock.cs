@@ -17,8 +17,8 @@ namespace LaparoCommunicator
 
         internal LaparoCommunicatorMock(string path)
         {
-            eulerData = File.ReadAllLines(path + "euler" + fileExtension);
-            quaternionData = File.ReadAllLines(path + "quaternion" + fileExtension);
+            eulerData = File.ReadAllLines(path + "/euler" + fileExtension);
+            quaternionData = File.ReadAllLines(path + "/quaternion" + fileExtension);
         }
 
         public EulerData GetDataInEuler()
