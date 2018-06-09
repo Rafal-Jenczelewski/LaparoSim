@@ -24,9 +24,9 @@ namespace LaparoTester2
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("Podano zły port, lub port nie mógł zostać otwarty.");
+                Console.WriteLine("Podano zły port, lub port nie mógł zostać otwarty. Wyjątek:\n" + e.Message);
             }
             Console.WriteLine("End.");
             Console.ReadKey();

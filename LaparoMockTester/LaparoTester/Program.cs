@@ -26,7 +26,7 @@ namespace LaparoTester
             }
             catch (IOException e)
             {
-                Console.WriteLine("Brak pliku z danymi, program kończy działanie.");
+                Console.WriteLine("Brak pliku z danymi, program kończy działanie. Wyjątek:\n" + e.Message);
             }
             Console.ReadKey();
         }
