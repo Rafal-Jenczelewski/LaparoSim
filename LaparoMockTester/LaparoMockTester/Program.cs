@@ -10,14 +10,14 @@ namespace LaparoMockTester
 {
     class Program
     {
-        static private String pathToPortFile = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "data");
+        static private String pathToData = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "data");
 
         static void Main(string[] args)
         {
-            while (!File.Exists(pathToPortFile + "/quaternion.tsv") || !File.Exists(pathToPortFile + "/euler.tsv"))
+            while (!File.Exists(pathToData + "/quaternion.tsv") || !File.Exists(pathToData + "/euler.tsv"))
             {
                 Console.WriteLine("W poniższym folderze muszą istnieć plik 'euler.tsv' oraz 'quaternion.tsv' aby program działał prawidłowo:");
-                Console.WriteLine(pathToPortFile);
+                Console.WriteLine(pathToData);
                 Console.WriteLine("Stwórz te pliki, a następnie naciśnij dowolny klawisz.");
                 Console.ReadKey(true);
             }
@@ -26,7 +26,7 @@ namespace LaparoMockTester
 
             try
             {
-                using (var comm = LaparoCommunicator.CommunicatorFactory.GetMock(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data")))
+                using (var comm = LaparoCommunicator.CommunicatorFactory.GetMock(pathToData))
                 {
                     while(true)
                     {

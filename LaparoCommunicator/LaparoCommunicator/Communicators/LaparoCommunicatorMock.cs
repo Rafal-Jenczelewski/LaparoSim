@@ -23,9 +23,9 @@ namespace LaparoCommunicator
 
         public EulerData GetDataInEuler()
         {
-            if (eulerData.Length == position)
+            if (eulerData.Length - 1 <= position)
                 position = 0;
-
+            
             var data = eulerData[position];
             var leftCoords = data.Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(float.Parse).ToArray();
 
@@ -38,9 +38,9 @@ namespace LaparoCommunicator
 
         public QuaternionData GetDataInQuaternion()
         {
-            if (quaternionData.Length == position)
+            if (quaternionData.Length - 1 <= position)
                 position = 0;
-
+            
             var data = quaternionData[position];
             var leftCoords = data.Split(CoordSeparator, StringSplitOptions.RemoveEmptyEntries).Select(float.Parse).ToArray();
 
