@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.IO;
 using System.IO.Ports;
 using System.Text;
@@ -11,10 +12,9 @@ namespace LaparoCommunicator
         private SerialPort port;
         private Thread pingerThread;
         private Thread receiverThread;
-        private string targetId = "PID_5740";
         private readonly InternalData internalData = new InternalData();
 
-        private static string portFilePath = Path.Combine(Directory.GetCurrentDirectory(), "/portName.txt");
+        private static string portFilePath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "portName.txt");
 
         internal LaparoCommunicatorImpl()
         {
@@ -55,9 +55,6 @@ namespace LaparoCommunicator
 
         private void SetPort()
         {
-            if (targetId == "")
-                throw new Exception("No id to search for set!");
-
             string[] portNames = SerialPort.GetPortNames();
             string portName = string.Empty;
 
